@@ -1,9 +1,11 @@
 package com.ljt.sample.activemq.topic;
 
 import javax.jms.JMSException;
+import javax.jms.MessageProducer;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 
-import com.ljt.sample.activemq.AbstractMQTemplate;
+import com.ljt.sample.activemq.core.ProduceTopicComponent;
 
 /**
  * @Project       : activemq-01
@@ -19,16 +21,16 @@ import com.ljt.sample.activemq.AbstractMQTemplate;
 public class NoPersistenceSender {
 
 	public static void main(String[] args) throws JMSException {
-		
-		AbstractMQTemplate queue = new AbstractMQTemplate() {
-			
+		ProduceTopicComponent component = new ProduceTopicComponent() {
 			@Override
-			protected void createDestination(Session session) throws JMSException {
-				
+			protected void messageHandler(Session session, MessageProducer target) throws JMSException {
+				for (int i = 0; i < 3; i++){
+					TextMessage message = session.createTextMessage("msg-" + i);
+					target.send(message);
+				}
 			}
 		};
-		
-		queue.execute();
+		component.execute("myTopic");
 	}
 	
 }

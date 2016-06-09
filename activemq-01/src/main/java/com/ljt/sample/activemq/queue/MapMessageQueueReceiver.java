@@ -1,12 +1,11 @@
 package com.ljt.sample.activemq.queue;
 
-import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 
-import com.ljt.sample.activemq.AbstractMQTemplate;
+import com.ljt.sample.activemq.core.ConsumerQueueComponent;
 
 /**
  * @Project       : activemq-01
@@ -22,25 +21,18 @@ import com.ljt.sample.activemq.AbstractMQTemplate;
 public class MapMessageQueueReceiver {
 	
 	public static void main(String[] args) throws JMSException {
-		
-		AbstractMQTemplate queue = new AbstractMQTemplate() {
-			
+		ConsumerQueueComponent component = new ConsumerQueueComponent() {
 			@Override
-			protected void createDestination(Session session) throws JMSException {
-				Destination destination = session.createQueue("my-queue");
-				MessageConsumer consumer = session.createConsumer(destination);
-				
+			protected void messageHandler(Session session, MessageConsumer target) throws JMSException {
 				for (int i = 0; i < 3; i++){
-					MapMessage message = (MapMessage) consumer.receive();
+					MapMessage message = (MapMessage) target.receive();
 					session.commit();
 					System.out.println("收到消息： " + message.getStringProperty("status") + 
 									   ", property = " + message.getStringProperty("msg-" + i));
 				}
-				
 			}
 		};
-		
-		queue.execute();
+		component.execute("my-queue");
 		
 	}
 

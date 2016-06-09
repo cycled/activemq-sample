@@ -1,4 +1,4 @@
-package com.ljt.sample.activemq;
+package com.ljt.sample.activemq.core;
 
 import java.util.Enumeration;
 
@@ -19,15 +19,32 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * ----------   -------------    -----------------------------------
  * wangchao     2016年6月10日        create
  */
-public abstract class AbstractMQTemplate {
+public abstract class ActiveMQTemplate <T> {
 
 	protected Connection conn;
+	
 	protected Session session;
-
-	public AbstractMQTemplate() {
+	
+	private boolean transactionActivated = false;
+	
+	public ActiveMQTemplate() {
 	}
-
-	public void execute() throws JMSException {
+	
+	/**
+	 *  @Description	: TODO wangchao 方法原文描述
+	 *  @return         : Component<T>
+	 *  @Creation Date  : 2016年6月10日 上午7:12:57 
+	 *  @Author         : wangchao
+	 */
+	public abstract Component<T> getComponent() ;
+	
+	/**
+	 *  @Description	: 执行消息的创建或者接收
+	 *  @return         : void
+	 *  @Creation Date  : 2016年6月10日 上午6:50:10 
+	 *  @Author         : wangchao
+	 */
+	public void execute(String destinationName) throws JMSException {
 
 		try {
 			conn = new ActiveMQConnectionFactory("tcp://171.16.1.230:61616").createConnection();
@@ -40,7 +57,15 @@ public abstract class AbstractMQTemplate {
 			// CLIENT_ACKNOWLEDGE：当客户通过调用消息的acknowledge方法确认消息。
 			// 需要注意的是，在这种模式中，确认是在会话层进行的
 			session = createSession(conn);
-			createDestination(session);
+			
+			getComponent().crateTarget(session, destinationName);
+			
+			messageHandler(session,getComponent().getTarget());
+			
+			// 如果事务被激活,则进行提交动作
+			if (transactionActivated)
+				session.commit();
+			
 		} catch (JMSException e) {
 			e.printStackTrace();
 		} finally {
@@ -50,6 +75,24 @@ public abstract class AbstractMQTemplate {
 				conn.close();
 			}
 		}
+	}
+	
+	/**
+	 *  @Description	: 对消息进行处理
+	 *  @return         : void
+	 *  @Creation Date  : 2016年6月10日 上午6:48:41 
+	 *  @Author         : wangchao
+	 */
+	protected abstract void messageHandler(Session session, T target) throws JMSException;
+	
+	/**
+	 *  @Description	: 设置事务是否被激活
+	 *  @return         : void
+	 *  @Creation Date  : 2016年6月10日 上午6:49:40 
+	 *  @Author         : wangchao
+	 */
+	protected void setTransactionActivated(boolean transactionActivated) {
+		this.transactionActivated = transactionActivated;
 	}
 
 	/**
@@ -62,9 +105,8 @@ public abstract class AbstractMQTemplate {
 		// Session.AUTO_ACKNOWLEDGE
 		// 当客户成功的从receive方法返回的时候，或者从MessageListener.onMessage方法
 		// 返回的时候，会话自动确认客户收到的消息。
+		transactionActivated = true;
 		return conn.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
 	}
-
-	protected abstract void createDestination(Session session) throws JMSException;
 
 }
