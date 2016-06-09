@@ -28,7 +28,7 @@ public class ClientAcknowledgeQueueReceiver {
 			
 			@Override
 			protected Session createSession(Connection conn) throws JMSException {
-				// 创建一个非事务的,客户确认消息模式的会话
+				// 创建一个非事务的,客户确认消息模式的会话,CLIENT_ACKNOWLEDGE仅在非事务的会话中生效
 				return conn.createSession(Boolean.FALSE, Session.CLIENT_ACKNOWLEDGE);
 			}
 			

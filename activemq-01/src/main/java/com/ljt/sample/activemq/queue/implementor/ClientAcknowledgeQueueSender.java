@@ -30,6 +30,7 @@ public class ClientAcknowledgeQueueSender {
 			// 不开启事务，并使用客户主动确认模式创建session
 			@Override
 			protected Session createSession(Connection conn) throws JMSException {
+				// CLIENT_ACKNOWLEDGE 会话模式仅在非事务的会话中生效
 				return conn.createSession(Boolean.FALSE, Session.CLIENT_ACKNOWLEDGE);
 			}
 			
