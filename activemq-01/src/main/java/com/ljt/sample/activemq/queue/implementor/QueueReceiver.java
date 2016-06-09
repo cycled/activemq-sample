@@ -39,6 +39,7 @@ public class QueueReceiver {
 		// 接收来自 队列的消息
 		for (int i = 0 ; i < 3; i++){
 			TextMessage message = (TextMessage) consumer.receive();
+			// 如果这里不提交，消息不会被确认，消息可以被重复接收
 			session.commit();
 			System.out.println("收到消息:" + message.getText());
 		}
