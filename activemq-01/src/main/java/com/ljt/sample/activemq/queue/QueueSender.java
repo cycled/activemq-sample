@@ -1,4 +1,4 @@
-package com.ljt.sample.activemq.queue.implementor;
+package com.ljt.sample.activemq.queue;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;

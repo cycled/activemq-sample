@@ -1,4 +1,4 @@
-package com.ljt.sample.activemq.queue;
+package com.ljt.sample.activemq;
 
 import java.util.Enumeration;
 

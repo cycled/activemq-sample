@@ -1,4 +1,4 @@
-package com.ljt.sample.activemq.queue.implementor;
+package com.ljt.sample.activemq.queue;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -6,7 +6,7 @@ import javax.jms.MapMessage;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 
-import com.ljt.sample.activemq.queue.AbstractQueue;
+import com.ljt.sample.activemq.AbstractQueue;
 
 /**
  * @Project       : activemq-01
