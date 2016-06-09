@@ -1,12 +1,11 @@
 package com.ljt.sample.activemq.queue;
 
-import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 
-import com.ljt.sample.activemq.AbstractQueue;
+import com.ljt.sample.activemq.core.ProduceQueueComponent;
 
 /**
  * @Project       : activemq-01
@@ -18,25 +17,21 @@ import com.ljt.sample.activemq.AbstractQueue;
 public class MapMessageQueueSender {
 	
 	public static void main(String[] args) throws JMSException {
-
-		AbstractQueue queue = new AbstractQueue() {
+		ProduceQueueComponent component = new ProduceQueueComponent() {
 			@Override
-			protected void createDestination(Session session) throws JMSException {
-				// 创建一个消息队列及其生产者
-				Destination destination = session.createQueue("my-queue");
-				MessageProducer producer = session.createProducer(destination);
+			protected void messageHandler(Session session, MessageProducer target) throws JMSException {
 				// 创建MapMessage消息
 				for (int i = 0 ; i < 3; i++){
 					MapMessage message = session.createMapMessage();
 					message.setStringProperty("status", "ok");
 					message.setStringProperty("msg-" + i, "my map msg : " + i);
-					producer.send(message);
+					target.send(message);
 				}
-				session.commit();
 			}
 		};
 		
-		queue.execute();
+		component.execute("my-queue");
+		
 	}
 
 }
