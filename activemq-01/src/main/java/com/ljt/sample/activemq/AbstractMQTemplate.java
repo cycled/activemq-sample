@@ -19,12 +19,12 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * ----------   -------------    -----------------------------------
  * wangchao     2016年6月10日        create
  */
-public abstract class AbstractQueue {
+public abstract class AbstractMQTemplate {
 
 	protected Connection conn;
 	protected Session session;
 
-	public AbstractQueue() {
+	public AbstractMQTemplate() {
 	}
 
 	public void execute() throws JMSException {

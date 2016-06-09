@@ -6,7 +6,7 @@ import javax.jms.MapMessage;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 
-import com.ljt.sample.activemq.AbstractQueue;
+import com.ljt.sample.activemq.AbstractMQTemplate;
 
 /**
  * @Project       : activemq-01
@@ -23,7 +23,7 @@ public class MapMessageQueueReceiver {
 	
 	public static void main(String[] args) throws JMSException {
 		
-		AbstractQueue queue = new AbstractQueue() {
+		AbstractMQTemplate queue = new AbstractMQTemplate() {
 			
 			@Override
 			protected void createDestination(Session session) throws JMSException {

@@ -7,7 +7,7 @@ import javax.jms.MapMessage;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 
-import com.ljt.sample.activemq.AbstractQueue;
+import com.ljt.sample.activemq.AbstractMQTemplate;
 
 /**
  * @Project       : activemq-01
@@ -25,7 +25,7 @@ public class ClientAcknowledgeQueueSender {
 	
 	public static void main(String[] args) throws JMSException {
 		
-		AbstractQueue queue = new AbstractQueue() {
+		AbstractMQTemplate queue = new AbstractMQTemplate() {
 			
 			// 不开启事务，并使用客户主动确认模式创建session
 			@Override
