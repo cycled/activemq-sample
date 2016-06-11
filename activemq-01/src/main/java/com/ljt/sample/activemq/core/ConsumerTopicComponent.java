@@ -13,7 +13,7 @@ import javax.jms.Session;
  */
 public abstract class ConsumerTopicComponent extends ActiveMQTemplate<MessageConsumer> implements Component<MessageConsumer> {
 	
-	private MessageConsumer consumer;
+	protected MessageConsumer consumer;
 
 	@Override
 	public void crateTarget(Session session,String destinationName) throws JMSException {

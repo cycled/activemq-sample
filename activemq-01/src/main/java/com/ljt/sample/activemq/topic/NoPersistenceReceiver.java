@@ -11,7 +11,7 @@ import com.ljt.sample.activemq.core.ConsumerTopicComponent;
 /**
  * @Project       : activemq-01
  * @Program Name  : com.ljt.sample.activemq.topic.NoPersistenceReceiver.java
- * @Description   : 订阅一个非持久化的消息
+ * @Description   : 订阅一个非持久化的消息,必须接收方在线时，生产者发布的消息才能被接收。
  * @Author        : wangchao
  * @Creation Date : 2016年6月10日 上午5:00:24 
  * @ModificationHistory  

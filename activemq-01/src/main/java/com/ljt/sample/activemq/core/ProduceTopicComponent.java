@@ -13,7 +13,7 @@ import javax.jms.Session;
  */
 public abstract class ProduceTopicComponent extends ActiveMQTemplate<MessageProducer> implements Component<MessageProducer> {
 	
-	private MessageProducer producer;
+	protected MessageProducer producer;
 
 	@Override
 	public void crateTarget(Session session,String destinationName) throws JMSException {
