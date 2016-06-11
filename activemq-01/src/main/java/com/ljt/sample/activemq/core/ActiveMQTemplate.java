@@ -69,6 +69,8 @@ public abstract class ActiveMQTemplate<T> {
 
 			crateConnection();
 			
+			crateConnectionAfter(this.conn);
+			
 			start();
 			
 			Enumeration<?> names = conn.getMetaData().getJMSXPropertyNames();
@@ -102,6 +104,16 @@ public abstract class ActiveMQTemplate<T> {
 			}
 		}
 	}
+	
+	/**
+	 *  @Description	: 创建连接后的动作，可扩展点
+	 *  @return         : void
+	 * @throws JMSException 
+	 *  @Creation Date  : 2016年6月11日 下午9:23:54 
+	 *  @Author         : wangchao
+	 */
+	protected void crateConnectionAfter(Connection connection) throws JMSException {
+	}
 
 	/**
 	 * @Description : 消息执行后处理动作
@@ -126,7 +138,7 @@ public abstract class ActiveMQTemplate<T> {
 	}
 
 	/**
-	 * @Description : 或者当前组件
+	 * @Description : 获取当前组件
 	 * @return : Component<T>
 	 * @Creation Date : 2016年6月10日 上午7:12:57
 	 * @Author : wangchao
