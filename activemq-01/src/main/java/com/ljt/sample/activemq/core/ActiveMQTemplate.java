@@ -19,6 +19,8 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  *                      create
  */
 public abstract class ActiveMQTemplate<T> {
+	
+	private String url;
 
 	private Connection conn;
 
@@ -28,7 +30,15 @@ public abstract class ActiveMQTemplate<T> {
 
 	public ActiveMQTemplate() {
 	}
-
+	
+	public ActiveMQTemplate(String url) {
+		this.url = url;
+	}
+	
+	protected boolean isEmpty(String value) {
+		return value == null || value.trim() == "";
+	}
+	
 	/**
 	 *  @Description	: 创建一个连接
 	 *  @return         : void
@@ -36,7 +46,7 @@ public abstract class ActiveMQTemplate<T> {
 	 *  @Author         : wangchao
 	 */
 	protected void crateConnection() throws JMSException {
-		this.conn = new ActiveMQConnectionFactory("tcp://171.16.1.230:61616").createConnection();
+		this.conn = new ActiveMQConnectionFactory(isEmpty(this.url) ? "tcp://171.16.1.230:61616" : this.url).createConnection();
 	}
 	
 	/**
@@ -66,7 +76,7 @@ public abstract class ActiveMQTemplate<T> {
 	public void execute(String destinationName) throws JMSException {
 
 		try {
-
+			
 			crateConnection();
 			
 			crateConnectionAfter(this.conn);
@@ -104,7 +114,7 @@ public abstract class ActiveMQTemplate<T> {
 			}
 		}
 	}
-	
+
 	/**
 	 *  @Description	: 创建连接后的动作，可扩展点
 	 *  @return         : void

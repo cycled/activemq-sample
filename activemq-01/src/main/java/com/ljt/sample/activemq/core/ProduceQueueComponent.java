@@ -14,6 +14,13 @@ import javax.jms.Session;
 public abstract class ProduceQueueComponent extends ActiveMQTemplate<MessageProducer> implements Component<MessageProducer> {
 	
 	private MessageProducer producer;
+	
+	public ProduceQueueComponent() {
+	}
+	
+	public ProduceQueueComponent(String url) {
+		super(url);
+	}
 
 	@Override
 	public void crateTarget(Session session,String destinationName) throws JMSException {

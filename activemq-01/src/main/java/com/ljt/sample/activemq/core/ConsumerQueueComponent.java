@@ -14,6 +14,13 @@ import javax.jms.Session;
 public abstract class ConsumerQueueComponent extends ActiveMQTemplate<MessageConsumer> implements Component<MessageConsumer> {
 	
 	private MessageConsumer consumer;
+	
+	public ConsumerQueueComponent() {
+	}
+	
+	public ConsumerQueueComponent(String url) {
+		super(url);
+	}
 
 	@Override
 	public void crateTarget(Session session,String destinationName) throws JMSException {
