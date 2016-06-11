@@ -6,6 +6,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * @Project       : activemq-02
+ * @Program Name  : com.ljt.sample.activemq.queue.QueueReceiver.java
+ * @Description   : 通过Spring JMSTemplate完成一个Queue消息接收
+ * @Author        : wangchao
+ * @Creation Date : 2016年6月12日 上午3:50:30 
+ */
 @Component
 public class QueueReceiver {
 	

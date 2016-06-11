@@ -12,6 +12,14 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
 
+/**
+ * @Project       : activemq-02
+ * @Program Name  : com.ljt.sample.activemq.queue.QueueSender.java
+ * @Description   : 通过Spring JMSTemplate完成一个Queue消息发送
+ * @Author        : wangchao
+ * @Creation Date : 2016年6月12日 上午3:51:14 
+ * @ModificationHistory  
+ */
 @Component
 public class QueueSender {
 	
